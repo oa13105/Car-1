@@ -1,7 +1,7 @@
 /** 
 * Enumeration of iKBADC.
 */
-enum iKB1ADC {
+enum Car1ADC {
     //% block="ADC 0"
     ADC0 = 0x80,
     //% block="ADC 1"
@@ -60,7 +60,7 @@ enum sv {
     //% block="ALL"
     ALL = 0x7F
 }
-enum iKB1MotorCH {
+enum Car1MotorCH {
     //% block="1"
     M1 = 0x21,
 
@@ -80,14 +80,14 @@ enum iKB1MotorCH {
     ALL = 0x2F,
 }
 
-enum iKB1Motor {
+enum Car1Motor {
     //% block="Forward \u21c8"
     Forward,
     //% block="Backward \u21ca"
     Backward
 }
 
-enum iKB1Turn {
+enum Car1Turn {
     //% block="Left \u27f5"
     Left,
     //% block="Right \u27f6"
@@ -97,7 +97,7 @@ enum iKB1Turn {
 /**
   * Enumeration of SpinMotor.
   */
-enum iKB1Spin {
+enum Car1Spin {
     //% block="Left \u21f5"
     Left,
     //% block="Right \u21c5"
@@ -108,10 +108,10 @@ enum iKB1Spin {
 /**
  * Custom blocks
  */
-//% weight=1 color=#93DAFF icon="\f63b"
+//% weight=30 color=#93DAFF icon="\uf1ba"
 namespace Car1 {
     /**
-     * ฟังก์ชั่นสำหรับการติดต่อกับบอร์ด iKB
+     * ฟังก์ชั่นสำหรับการติดต่อกับบอร์ด iKB-1
      * @param n describe parameter here, eg: 5
      * @param s describe parameter here, eg: "Hello"
      * @param e describe parameter here
@@ -148,7 +148,7 @@ namespace Car1 {
          */
     //% blockId="Car1ADC" block="Car1 Read %ADC_CH"
     //% weight=75
-    export function ADC(ADC_CH: iKB1ADC): number {
+    export function ADC(ADC_CH: Car1ADC): number {
         let ADCValue: number;
         pins.i2cWriteNumber(72, ADC_CH, NumberFormat.UInt8LE, false)
         return pins.i2cReadNumber(72, NumberFormat.UInt16BE, false)
@@ -157,14 +157,14 @@ namespace Car1 {
     /**Motor Block to drives motor forward and backward. The speed motor is adjustable between 0 to 100.
       * @param speed percent of maximum speed, eg: 50
       */
-    //% blockId="Car1_Motor" block="Car1 Motor %iKB1Motor|speed %speed"
+    //% blockId="Car1_Motor" block="Car1 Motor %Car1Motor|speed %speed"
     //% speed.min=0 speed.max=100
     //% weight=95
-    export function Motor(Motor: iKB1Motor, speed: number): void {
-        if (Motor == iKB1Motor.Forward) {
+    export function Motor(Motor: Car1Motor, speed: number): void {
+        if (Motor == Car1Motor.Forward) {
             pins.i2cWriteNumber(72, (0x23 * 256) + speed, NumberFormat.UInt16BE, false)
         }
-        else if (Motor == iKB1Motor.Backward) {
+        else if (Motor == Car1Motor.Backward) {
             pins.i2cWriteNumber(72, (0x23 * 256) + (256 - speed), NumberFormat.UInt16BE, false)
         }
     }
@@ -180,14 +180,14 @@ namespace Car1 {
     /**MotorCH set Motor Channel and Direction. The speed motor is adjustable between 0 to 100.   
      * @param Speed percent of maximum Speed, eg: 50
      */
-    //% blockId="Car1_MotorCH" block="setMotor %iKB1MotorCH | Direction %iKB1Motor | Speed %Speed"
+    //% blockId="Car1_MotorCH" block="setMotor %Car1MotorCH | Direction %Car1Motor | Speed %Speed"
     //% Speed.min=0 Speed.max=100
     //% weight=100
-    export function setMotor(Channel: iKB1MotorCH, Direction: iKB1Motor, Speed: number): void {
-        if (Direction == iKB1Motor.Forward) {
+    export function setMotor(Channel: Car1MotorCH, Direction: Car1Motor, Speed: number): void {
+        if (Direction == Car1Motor.Forward) {
             pins.i2cWriteNumber(72, (Channel * 256) + (Speed), NumberFormat.UInt16BE, false)
         }
-        else if (Direction == iKB1Motor.Backward) {
+        else if (Direction == Car1Motor.Backward) {
             pins.i2cWriteNumber(72, (Channel * 256) + (256 - Speed), NumberFormat.UInt16BE, false)
         }
 
@@ -197,15 +197,15 @@ namespace Car1 {
     /**Spin Block set direction SpinLeft or SpinRight. The speed motor is adjustable between 0 to 100.  
       * @param speed percent of maximum speed, eg: 50
       */
-    //% blockId="Car1_Spin" block="Car1 Spin %iKB1Spin|speed %speed"
+    //% blockId="Car1_Spin" block="Car1 Spin %Car1Spin|speed %speed"
     //% speed.min=0 speed.max=100
     //% weight=85
-    export function Spin(Spin: iKB1Spin, speed: number): void {
-        if (Spin == iKB1Spin.Left) {
+    export function Spin(Spin: Car1Spin, speed: number): void {
+        if (Spin == Car1Spin.Left) {
             pins.i2cWriteNumber(72, (0x21 * 256) + (speed), NumberFormat.UInt16BE, false)
             pins.i2cWriteNumber(72, (0x22 * 256) + (256 - speed), NumberFormat.UInt16BE, false)
         }
-        else if (Spin == iKB1Spin.Right) {
+        else if (Spin == Car1Spin.Right) {
             pins.i2cWriteNumber(72, (0x22 * 256) + (speed), NumberFormat.UInt16BE, false)
             pins.i2cWriteNumber(72, (0x21 * 256) + (256 - speed), NumberFormat.UInt16BE, false)
         }
@@ -214,15 +214,15 @@ namespace Car1 {
     /**Turn Block set direction TurnLeft or TurnRight. The speed motor is adjustable between 0 to 100.
       * @param speed percent of maximum speed, eg: 50
       */
-    //% blockId="Car1_Turn" block="Car1 Turn %iKB1Turn|speed %speed"
+    //% blockId="Car1_Turn" block="Car1 Turn %Car1Turn|speed %speed"
     //% speed.min=0 speed.max=100
     //% weight=90
-    export function Turn(Turn: iKB1Turn, speed: number): void {
-        if (Turn == iKB1Turn.Left) {
+    export function Turn(Turn: Car1Turn, speed: number): void {
+        if (Turn == Car1Turn.Left) {
             pins.i2cWriteNumber(72, (0x22 * 256) + (speed), NumberFormat.UInt16BE, false)
             pins.i2cWriteNumber(72, (0x21 * 256) + (0), NumberFormat.UInt16BE, false)
         }
-        else if (Turn == iKB1Turn.Right) {
+        else if (Turn == Car1Turn.Right) {
             pins.i2cWriteNumber(72, (0x21 * 256) + (speed), NumberFormat.UInt16BE, false)
             pins.i2cWriteNumber(72, (0x22 * 256) + (0), NumberFormat.UInt16BE, false)
         }
