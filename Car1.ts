@@ -108,7 +108,7 @@ enum iKB1Spin {
 /**
  * Custom blocks
  */
-//% weight=1 color=#93DAFF icon="\f1b9"
+//% weight=1 color=#93DAFF icon="\f63b"
 namespace Car1 {
     /**
      * ฟังก์ชั่นสำหรับการติดต่อกับบอร์ด iKB
@@ -197,7 +197,7 @@ namespace Car1 {
     /**Spin Block set direction SpinLeft or SpinRight. The speed motor is adjustable between 0 to 100.  
       * @param speed percent of maximum speed, eg: 50
       */
-    //% blockId="Car1_Spin" block="iKB1 Spin %iKB1Spin|speed %speed"
+    //% blockId="Car1_Spin" block="Car1 Spin %iKB1Spin|speed %speed"
     //% speed.min=0 speed.max=100
     //% weight=85
     export function Spin(Spin: iKB1Spin, speed: number): void {
@@ -214,7 +214,7 @@ namespace Car1 {
     /**Turn Block set direction TurnLeft or TurnRight. The speed motor is adjustable between 0 to 100.
       * @param speed percent of maximum speed, eg: 50
       */
-    //% blockId="Car1_Turn" block="iKB1 Turn %iKB1Turn|speed %speed"
+    //% blockId="Car1_Turn" block="Car1 Turn %iKB1Turn|speed %speed"
     //% speed.min=0 speed.max=100
     //% weight=90
     export function Turn(Turn: iKB1Turn, speed: number): void {
